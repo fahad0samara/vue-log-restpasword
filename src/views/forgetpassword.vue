@@ -74,7 +74,7 @@ const submit = async () => {
             user: email.value,
     
         })
-        router.push('/resetpassword')
+        alert("check your email")
 
 
     } catch (e) {

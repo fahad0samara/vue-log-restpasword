@@ -69,17 +69,22 @@ const error = ref()
 const router = useRouter()
 const password = ref()
 
+// const {token,id}=data
+
 const submit = async () => {
+    console.log('5555');
     try {
-        const data = await axios.post(`http://localhost:2020/rest-password`, {
-            password:password.value,
+        const data = await axios.post(`http://localhost:2020/rest-password?token=${token}&id=${data._id}`, {
+            password:password.value
+            
     
         })
+        console.log(data,"sss");
         router.push('/log')
 
 
     } catch (e) {
-        error.value = e.response.data
+        error.value = e.response
 
 
 
