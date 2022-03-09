@@ -34,7 +34,7 @@ const router = createRouter({
       component: () => import('../views/forgetpassword.vue')
     },
     {
-      path: '/rest-password',
+      path: '/rest-password/:token',
       name: 'rest-password',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route

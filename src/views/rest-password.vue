@@ -30,19 +30,17 @@
                                     <div
                                         class="bg-black flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10"
                                     >
-                                    <h1 class=" text-white">rest your password</h1>
+                                        <h1 class="text-white">rest your password</h1>
                                         <form
                                             class="flex flex-col space-y-12 mt-8"
                                             @submit.prevent="submit"
                                         >
                                             <input
                                                 type="text"
-                                                v-model="password"
+                                                v-model="token"
                                                 placeholder="new password :"
                                                 class="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
                                             />
-
-                                          
 
                                             <button
                                                 class="border border-indigo-600 bg-sky-600 hover:bg-white hover:text-black text-white rounded-lg py-3 font-semibold"
@@ -62,24 +60,28 @@
     </main>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import axios from 'axios'
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const error = ref()
+const route = useRoute()
 const router = useRouter()
-const password = ref()
+
+const password=ref()
+const token = ref()
 
 // const {token,id}=data
 
 const submit = async () => {
-    console.log('5555');
+    console.log('e');
     try {
-        const data = await axios.post(`http://localhost:2020/rest-password?token=${token}&id=${data._id}`, {
-            password:password.value
-            
-    
+        
+        const user = await axios.post(`http://localhost:2020/rest-password/`,{
+            password:password.value,
+            token:route.params.token
         })
-        console.log(data,"sss");
+        console.log(user);
+                    
         router.push('/log')
 
 
