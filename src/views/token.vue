@@ -1,4 +1,3 @@
-
 <template>
   <main>
     <!-- component -->
@@ -32,33 +31,26 @@
                   <div
                     class="bg-black flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10"
                   >
+                    <h1 class="text-white">ver your token</h1>
                     <form
                       class="flex flex-col space-y-12 mt-8"
                       @submit.prevent="submit"
                     >
                       <input
                         type="text"
-                        v-model="email"
-                        placeholder="your email :"
+                        v-model="token"
+                        placeholder="new password :"
                         class="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
                       />
 
-                      <input
-                        type="password"
-                        v-model="password"
-                        placeholder="your password :"
-                        class="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
-                      />
-        <routerLink to="/forget" class=" text-white"> forgot password
-               </routerLink>
                       <button
                         class="border border-indigo-600 bg-sky-600 hover:bg-white hover:text-black text-white rounded-lg py-3 font-semibold"
                         routerLink="/dashboard"
                       >
-                        log in
+                        submit
                       </button>
-                          
-                  <p v-if="error" class=" bg-white">{{error}}</p> 
+
+                      <p v-if="error" class="bg-white">{{ error }}</p>
                     </form>
                   </div>
                 </div>
@@ -71,33 +63,30 @@
   </main>
 </template>
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios'
-import { useRouter } from 'vue-router';
-const error=ref()
-const success=ref()
-const router=useRouter()
-const email = ref()
-const password = ref()
-const submit =async () => {
-try {
-const data = await axios.post(`http://localhost:2020/log`,{
-    user:email.value,
-    password:password.value
-})
-success.value=alert(data.data)
-router.push('/home')
+import axios from "axios";
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+const error = ref();
+const success=ref();
+const router = useRouter();
+const token = ref()
+const userid= ref()
+const route = useRoute();
 
- 
+// const {token,id}=data
 
-}catch(e) {
-console.log(alert(e.response.data));
+const submit = async () => {
+  try {
+    const user = await axios.post(`http://localhost:2020/verify-email`, {
+      token: token.value,
+      userid:userid.value
+    });
+    success.value=alert('YOUR REGISTERS COMBATED')
+    console.log(user, "e");
 
-              
-
-}
-  
-}
-
+    router.push("/home");
+  } catch (e) {
+    error.value = e.response;
+  }
+};
 </script>
-

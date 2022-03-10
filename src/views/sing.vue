@@ -84,7 +84,7 @@ const data = await axios.post(`http://localhost:2020/sing`,{
     user:email.value,
     password:password.value
 })
-router.push('/log')
+router.push('/token')
  
 
 }catch(e) {

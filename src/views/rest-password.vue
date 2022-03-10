@@ -37,7 +37,7 @@
                                         >
                                             <input
                                                 type="text"
-                                                v-model="token"
+                                                v-model="password"
                                                 placeholder="new password :"
                                                 class="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
                                             />
@@ -60,28 +60,30 @@
     </main>
 </template>
 <script setup>
+import { useUrlSearchParams } from '@vueuse/core'
 import { reactive, ref } from 'vue';
 import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router';
 const error = ref()
-const route = useRoute()
-const router = useRouter()
 
-const password=ref()
-const token = ref()
+const router = useRouter()
+const password = ref()
+const route = useRoute()
+const { token, id } = useUrlSearchParams('history')
+console.log(token, id);
+
 
 // const {token,id}=data
 
 const submit = async () => {
-    console.log('e');
+
     try {
-        
-        const user = await axios.post(`http://localhost:2020/rest-password/`,{
-            password:password.value,
-            token:route.params.token
+
+        const user = await axios.post(`http://localhost:2020/rest-password?token=${token}&id=${id}`, {
+password:password.value
         })
-        console.log(user);
-                    
+        console.log(user, "e");
+
         router.push('/log')
 
 
